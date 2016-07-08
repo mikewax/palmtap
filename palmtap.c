@@ -1,30 +1,23 @@
+
 unsigned int input;
-int i;
+int i, j;
 
 void setup() { 
-pinMode(PIN_x, OUTPUT); // strobe
-pinMode(PIN_x, OUTPUT); // strobe
-pinMode(PIN_x, OUTPUT); // strobe
-pinMode(PIN_x, OUTPUT); // strobe
-pinMode(PIN_y, INPUT_PULLUP); // probe
-pinMode(PIN_y, INPUT_PULLUP); // probe
-pinMode(PIN_y, INPUT_PULLUP); // probe
-pinMode(PIN_y, INPUT_PULLUP); // probe
+for ( i = 16; i < 20; i++) pinMode( i, OUTPUT); // strobe
+for ( j = 20; j < 24; j++) pinMode( j,  INPUT_PULLUP); // probe
 } 
 
 void poll(unsigned int input) { 
 input = 0;
-for ( i = 0; i < 4; i++) {
-strobe i;
-for ( j = 0; j < 4; j++) {
-shift input left;
-if (digitalRead(j)) input++; 
-}
+for ( i = 16; i < 20; i++) {
+digitalWrite( i, LOW ); delay(1);
+for ( j = 20; j < 24; j++) { input << 1; if ( !digitalRead(j) ) input++;  }
+digitalWrite( i, HIGH ); }
+return input; }
+
 
 
 { // D7 pin is high due to pullup resistor 
-digitalWrite(PIN_D6, LOW); // LED on 
-delay(400); // Slow blink 
 digitalWrite(PIN_D6, HIGH); // LED off 
 delay(400); 
 }
